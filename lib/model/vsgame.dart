@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:quizoffootball/model/user.dart';
 
 class VSGame {
   final int id;
@@ -7,30 +8,36 @@ class VSGame {
   final int p2_id;
   final bool p1_done;
   final bool p2_done;
+
 //  final String p1_username;
 //  final String p2_username;
-  final String p1_status;
-  final String p2_status;
+  final List<dynamic> p1_status;
+  final List<dynamic> p2_status;
   final int rounds;
-  final String questions;
+  final List<dynamic> questions;
   final String start_time;
   final int limit_time;
   final String created_at;
+  final User player1;
+  final User player2;
 
   VSGame(
-      this.id,
-      this.game_id,
-      this.p1_id,
-      this.p2_id,
-      this.questions,
-      this.p1_done,
-      this.p2_done,
-      this.p1_status,
-      this.p2_status,
-      this.rounds,
-      this.start_time,
-      this.limit_time,
-      this.created_at);
+    this.id,
+    this.game_id,
+    this.p1_id,
+    this.p2_id,
+    this.questions,
+    this.p1_done,
+    this.p2_done,
+    this.p1_status,
+    this.p2_status,
+    this.rounds,
+    this.start_time,
+    this.limit_time,
+    this.created_at,
+    this.player1,
+    this.player2,
+  );
 
   VSGame.fromJson(Map<String, dynamic> json)
       : id = json['id'] as int,
@@ -47,6 +54,8 @@ class VSGame {
         p1_status = json['p1_status'],
         p2_status = json['p2_status'],
         start_time = json['start_time'],
+        player1 = User.fromJson(json['player1']),
+        player2 = User.fromJson(json['player2']),
         created_at = json['created_at'];
 
 //  Map<String, dynamic> toJson() => {

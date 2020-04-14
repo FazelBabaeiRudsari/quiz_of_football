@@ -9,6 +9,7 @@ class Variable {
 
   static String LINK_FIND_GAMER = "${DOMAIN}/game/findGamer";
   static String LINK_GET_USER = "${DOMAIN}/game/getUser";
+  static String LINK_MY_GAMES = "${DOMAIN}/game/myGames";
 
   static String LINK_GROUPS = "${APIDOMAIN}/doc/groups";
 

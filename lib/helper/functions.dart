@@ -43,13 +43,48 @@ class Functions {
     }
   }
 
-  static Future<User> getUser(context, params) async {
+  static Future<List<VSGame>> myGames(context, params) async {
     try {
-      Uri uri = Uri.parse(Variable.LINK_GET_USER);
+      Uri uri = Uri.parse(Variable.LINK_MY_GAMES);
       final newURI = uri.replace(queryParameters: params);
 //      print(newURI);
 //
 // if (accessToken != '')
+      return client.get(
+        newURI,
+        headers: {"Content-Type": "application/json"},
+      ).then((http.Response response) async {
+        if (response.statusCode != 200) return null;
+        List<VSGame> vsGames = List<VSGame>();
+        var parsedJson = json.decode(response.body);
+        print(parsedJson);
+        for (final tmp in parsedJson) {
+          VSGame vg = VSGame.fromJson(tmp);
+          // print(w);
+
+          vsGames.add(vg);
+        }
+        return vsGames;
+
+        return null;
+      }, onError: (e) {
+//        showMessage(context, "Check Your Internet Connection And Try Again !");
+        print(e);
+        return null;
+      });
+    } catch (e) {
+      print(e);
+
+//      showMessage(context, "Check Your Internet Connection And Try Again !");
+      return null;
+    }
+  }
+
+  static Future<User> getUser(context, params) async {
+    try {
+      Uri uri = Uri.parse(Variable.LINK_GET_USER);
+      final newURI = uri.replace(queryParameters: params);
+
       return client.get(
         newURI,
         headers: {"Content-Type": "application/json"},
