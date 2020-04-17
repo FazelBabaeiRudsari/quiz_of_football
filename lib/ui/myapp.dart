@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:quizoffootball/customs/data.dart';
+import 'package:quizoffootball/customs/dimens.dart';
 import 'package:quizoffootball/games/logo.dart';
+import 'package:quizoffootball/ui/gamedetails.dart';
 import 'package:quizoffootball/ui/gamestatus.dart';
 import 'package:quizoffootball/ui/profile.dart';
 
@@ -32,6 +34,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    Dimens.size = MediaQuery.of(context).size;
     PageController controller = PageController(initialPage: images.length - 1);
     controller.addListener(() {
       setState(() {

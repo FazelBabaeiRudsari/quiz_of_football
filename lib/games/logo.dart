@@ -2,8 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:quizoffootball/helper/functions.dart';
+import 'package:quizoffootball/model/user.dart';
+import 'package:quizoffootball/model/vsgame.dart';
 
 class Logo extends StatefulWidget {
+  Logo(VSGame vsGame, User player1, List<dynamic> p1_status);
+
   @override
   _LogoState createState() => _LogoState();
 }

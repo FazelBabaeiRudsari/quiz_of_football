@@ -6,7 +6,9 @@ import 'package:quizoffootball/customs/VSGameBloc.dart';
 import 'package:quizoffootball/customs/dimens.dart';
 import 'package:quizoffootball/customs/loaders.dart';
 import 'package:quizoffootball/customs/theme.dart';
+import 'package:quizoffootball/games/logo.dart';
 import 'package:quizoffootball/helper/functions.dart';
+import 'package:quizoffootball/helper/variables.dart';
 import 'package:quizoffootball/model/user.dart';
 import 'package:quizoffootball/model/vsgame.dart';
 import 'package:quizoffootball/ui/gamedetails.dart';
@@ -70,7 +72,12 @@ class _GameStatusState extends State<GameStatus> {
                                   style: TextStyle(color: Colors.white),
                                 );
                               case ConnectionState.waiting:
-                                return Center(child: Loader());
+                                return Center(
+                                    widthFactor:
+                                        MediaQuery.of(context).size.width / 2,
+                                    heightFactor:
+                                        MediaQuery.of(context).size.height / 2,
+                                    child: Loader());
                               case ConnectionState.done:
                                 return Text(
                                   'Done',
@@ -100,32 +107,32 @@ class _GameStatusState extends State<GameStatus> {
                                   vsGames.addAll(snapshot.data);
                                   snapshot.data.clear();
                                   print(vsGames.length);
-                                  return Container(
-                                    margin: EdgeInsets.only(top: 300.0),
-//                              height: 200.0,
-                                    color: Colors.white,
-                                    child: Column(
-                                      children: gameRows(vsGames),
-
-//                                  ListView.builder(
-//                                    controller: null,
-//                                    itemCount: vsGames.length,
-//                                    itemBuilder:
-//                                        (BuildContext context, int index) {
-//                                      // if (index ==
-//                                      //         wallpapers
-//                                      //             .length /*&&
-//                                      //     Variable.TOTAL_WALLPAPERS > wallpapers.length*/
-//                                      //     ) return CupertinoActivityIndicator();
-//                                      return _vsGamesRow(
-//                                          context, vsGames[index]);
-//                                    },
-//                                  ),
-//
-                                    ),
+                                  return Column(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text("MY GAMES"),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: MyColors.backgroundColor,
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        margin: EdgeInsets.only(
+                                            top: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                2 /
+                                                5,
+                                            right: 10.0,
+                                            left: 10.0),
+                                        child: Column(
+                                          children: gameRows(vsGames),
+                                        ),
+                                      ),
+                                    ],
                                   );
                                 }
-
                                 break;
                               default:
                                 return Text('');
@@ -140,15 +147,13 @@ class _GameStatusState extends State<GameStatus> {
                   children: [
                     Container(
                         margin: const EdgeInsets.only(
-                            top: 50.0, left: 20.0, right: 20.0, bottom: 50.0),
+                            top: 50.0, left: 20.0, right: 20.0),
                         decoration: BoxDecoration(
-//                        color: Colors.,
                             color: MyColors.primaryButton,
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(10.0)),
                         width: double.infinity,
-                        height: Dimens.avatarRadius * 2,
-//                      margin: EdgeInsets.symmetric(horizontal: 8.0),
+                        height: Dimens.avatarRadius * 2.5,
                         child: Stack(
                           children: <Widget>[
                             ClipPath(
@@ -187,42 +192,123 @@ class _GameStatusState extends State<GameStatus> {
                                 } else if (snapshot.hasData) {
                                   me = snapshot.data;
 
-                                  return Padding(
+                                  return Container(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(me.username,
-                                            style: MyStyles.profileTextStyle),
-                                        me.img == null
-                                            ? CircleAvatar(
-                                                child: Image.asset(
-                                                    "images/avatars/boy.png"),
-                                                backgroundColor:
-                                                    MyColors.avatarBackground,
-                                                radius: Dimens.avatarRadius,
-                                              )
-                                            : CircleAvatar(
-                                                backgroundImage:
-                                                    AdvancedNetworkImage(
-                                                        me.img),
-                                                radius: 20.0,
-                                              ),
+                                    child: Center(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(me.username,
+                                                    style: MyStyles
+                                                        .profileTextStyle),
+                                                me.img == null
+                                                    ? CircleAvatar(
+                                                        child: Image.asset(
+                                                            "images/avatars/boy.png"),
+                                                        backgroundColor: MyColors
+                                                            .avatarBackground,
+                                                        radius: Dimens
+                                                                .avatarRadius /
+                                                            2,
+                                                      )
+                                                    : CircleAvatar(
+                                                        backgroundImage:
+                                                            AdvancedNetworkImage(
+                                                                me.img),
+                                                        radius: 20.0,
+                                                      ),
 //                                    : AdvancedNetworkImage(me.img),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: MyColors.level),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(20.0),
-                                            child: Text(
-                                              Functions.getLevel(me.score),
-                                              style: MyStyles.profileTextStyle,
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: MyColors.level),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            20.0),
+                                                    child: Text(
+                                                      Functions.getLevel(
+                                                          me.score),
+                                                      style: MyStyles
+                                                          .profileTextStyle,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
                                             ),
                                           ),
-                                        )
-                                      ],
+                                          Expanded(
+                                            child: Container(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 8.0),
+                                              child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Expanded(
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(2.0),
+                                                      child: FlatButton(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0)),
+                                                        color: MyColors
+                                                            .floatButton,
+                                                        child: InkWell(
+                                                          child: Text(
+                                                            "Find Player",
+                                                            style: MyStyles
+                                                                .profileTextStyle,
+                                                            maxLines: 1,
+                                                          ),
+                                                        ),
+                                                        onPressed: () async {
+                                                          _findPlayer();
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(4.0),
+                                                      child: FlatButton(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0)),
+                                                        color: MyColors
+                                                            .floatButton,
+                                                        child: InkWell(
+                                                          child: Text(
+                                                            "league",
+                                                            style: MyStyles
+                                                                .profileTextStyle,
+                                                            maxLines: 1,
+                                                          ),
+                                                        ),
+                                                        onPressed: _findLeague,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   );
                                 } else {
@@ -234,44 +320,8 @@ class _GameStatusState extends State<GameStatus> {
                             ),
                           ],
                         )),
-                    Container(
-//                      padding: EdgeInsets.all(300.0),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Text("Find Player"),
-                            onTap: _findPlayer(),
-                          ),
-                          InkWell(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Text("League"),
-                            onTap: _findLeague(),
-                          )
-                        ],
-                      ),
-                    ),
                   ],
                 ),
-                // find user and league buttons
-
-//                Container(
-//                  padding: EdgeInsets.all(300.0),
-//                  child: Row(
-//                    children: [
-//                      InkWell(
-//                        borderRadius: BorderRadius.circular(8.0),
-//                        child: Text("Find Player"),
-//                        onTap: _findPlayer(),
-//                      ),
-//                      InkWell(
-//                        borderRadius: BorderRadius.circular(8.0),
-//                        child: Text("League"),
-//                        onTap: _findLeague(),
-//                      )
-//                    ],
-//                  ),
-//                ),
               ],
             ),
           )
@@ -288,21 +338,58 @@ class _GameStatusState extends State<GameStatus> {
     _bloc.sink.add(await Functions.myGames(context, {"game_id": "1"}));
   }
 
-  _findPlayer() {}
+  _findPlayer() async {
+    VSGame _vsGame = await Functions.findGamer(context, {"game_id": "1"});
+
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => GameDetails(_vsGame, me.id)));
+  }
 
   _findLeague() {}
 
   _openVSGame(VSGame vsGame) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => GameDetails()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => GameDetails(vsGame, me.id)));
   }
 
   List<Widget> gameRows(List<VSGame> vsGames) {
-    List<Widget> gameRows = List<Widget>();
     return vsGames
-        .map((e) => Container(
-              child: Text(e.p1_id.toString()),
-            ))
+        .map((e) => GestureDetector(
+            child: Container(
+              margin: EdgeInsets.only(bottom: 10.0, right: 20.0, left: 20.0),
+              decoration: BoxDecoration(
+                  color: MyColors.myGameContainer,
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  me.img == null
+                      ? CircleAvatar(
+                          child: Image.asset("images/avatars/boy-2.png"),
+                          backgroundColor: MyColors.avatarBackground,
+                          radius: Dimens.avatarRadius / 2,
+                        )
+                      : CircleAvatar(
+                          backgroundImage: AdvancedNetworkImage(
+                            e.p1_id == me.id ? e.player2.img : e.player1.img,
+                          ),
+                          radius: 20.0,
+                        ),
+                  Text(
+                    e.p1_id == me.id ? e.player2.username : e.player1.username,
+                    style: MyStyles.profileTextStyle,
+                  ),
+                  Text(
+                    e.limit_time.toString() + " " + "min",
+                    style: MyStyles.profileTextStyle,
+                  ),
+                ],
+              ),
+            ),
+            onTap: () {
+              return _openVSGame(e);
+            }))
         .toList();
   }
 }
@@ -353,7 +440,7 @@ class TopClipperThree extends CustomClipper<Path> {
     path.lineTo(0.0, size.height * 19 / 20);
     path.lineTo(size.width, size.height / 5);
     path.lineTo(size.width, 0.0);
-    path.lineTo(0.0, size.height * 1 / 50);
+    path.lineTo(0.0, 0.0);
 
 //    path.close();
     return path;

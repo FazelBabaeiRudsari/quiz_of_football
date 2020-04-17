@@ -57,13 +57,15 @@ class Functions {
         if (response.statusCode != 200) return null;
         List<VSGame> vsGames = List<VSGame>();
         var parsedJson = json.decode(response.body);
-        print(parsedJson);
+//        print(parsedJson);
         for (final tmp in parsedJson) {
           VSGame vg = VSGame.fromJson(tmp);
           // print(w);
 
           vsGames.add(vg);
         }
+//        print("dsddddddddddddddddddddddddddddddddddddddddddd" +
+//            vsGames.length.toString());
         return vsGames;
 
         return null;

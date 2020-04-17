@@ -14,7 +14,7 @@ class VSGame {
   final List<dynamic> p1_status;
   final List<dynamic> p2_status;
   final int rounds;
-  final List<dynamic> questions;
+  final String questions;
   final String start_time;
   final int limit_time;
   final String created_at;
